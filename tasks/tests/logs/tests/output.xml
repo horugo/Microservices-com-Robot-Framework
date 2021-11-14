@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.1 (Python 3.9.7 on win32)" generated="20211113 22:05:11.280" rpa="false" schemaversion="2">
+<suite id="s1" name="Post" source="C:\qaninja\robot-ms-trello\tasks\tests\specs\post.robot">
+<test id="s1-t1" name="Deve criar uma tarefa">
+<kw name="Get Auth Token">
+<var>${token}</var>
+<arg>papito@msn.com</arg>
+<arg>pwd123</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${user}</var>
+<arg>email=${email}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211113 22:05:11.447" level="INFO">${user} = {'email': 'papito@msn.com', 'password': 'pwd123'}</msg>
+<status status="PASS" starttime="20211113 22:05:11.447" endtime="20211113 22:05:11.447"/>
+</kw>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${USERS_API}/auth</arg>
+<arg>json${user}</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211113 22:05:11.467" level="INFO">POST Request : url=http://localhost:3301/auth 
+ path_url=/auth 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '53'} 
+ body=json{'email': 'papito@msn.com', 'password': 'pwd123'} 
+ </msg>
+<msg timestamp="20211113 22:05:11.468" level="INFO">POST Response : url=http://localhost:3301/auth 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Date': 'Sun, 14 Nov 2021 01:05:11 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20211113 22:05:11.470" level="FAIL">HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3301/auth</msg>
+<status status="FAIL" starttime="20211113 22:05:11.447" endtime="20211113 22:05:11.470"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${token}</var>
+<arg>Bearer ${response.json()}[token]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20211113 22:05:11.470" endtime="20211113 22:05:11.470"/>
+</kw>
+<status status="FAIL" starttime="20211113 22:05:11.446" endtime="20211113 22:05:11.471"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20211113 22:05:11.471" endtime="20211113 22:05:11.471"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${token}</var>
+<arg>title=Estudar Nodejs</arg>
+<arg>done=false</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20211113 22:05:11.471" endtime="20211113 22:05:11.472"/>
+</kw>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${TASKS_API}/tasks</arg>
+<arg>json=${task}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="NOT RUN" starttime="20211113 22:05:11.472" endtime="20211113 22:05:11.472"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="NOT RUN" starttime="20211113 22:05:11.472" endtime="20211113 22:05:11.472"/>
+</kw>
+<status status="FAIL" starttime="20211113 22:05:11.446" endtime="20211113 22:05:11.473">HTTPError: 401 Client Error: Unauthorized for url: http://localhost:3301/auth</status>
+</test>
+<doc>Testando o método HTTP POST</doc>
+<status status="FAIL" starttime="20211113 22:05:11.280" endtime="20211113 22:05:11.475"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Post">Post</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
